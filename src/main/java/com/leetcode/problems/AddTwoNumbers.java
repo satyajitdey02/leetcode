@@ -27,15 +27,19 @@ public class AddTwoNumbers {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
-        ListNode result = null;
+        //To avoid unnecessary conditions checking create  dummy node
+        //then after getting result list return result.next to get expected list
+        ListNode result = new ListNode(0);
 
         int carry = 0;
-        ListNode current = null;
+        ListNode current = result;
         while (l1 != null || l2 != null) {
-            int sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + carry;
+            int sum = (l1 != null ? l1.val : 0)
+                    + (l2 != null ? l2.val : 0) + carry;
             carry = sum / 10;
 
-            result = insert(result, new ListNode(sum % 10));
+            current.next = new ListNode(sum % 10);
+            current = current.next;
 
             if (l1 != null) {
                 l1 = l1.next;
@@ -47,26 +51,9 @@ public class AddTwoNumbers {
         }
 
         if (carry > 0) {
-            //result.next = new ListNode(carry);
-            result = insert(result, new ListNode(carry));
+            current.next = new ListNode(carry);
         }
 
-
-        return result;
-    }
-
-    private ListNode insert(ListNode head, ListNode node) {
-        if (head == null) {
-            return node;
-        }
-
-        ListNode last = head;
-        while (last.next != null) {
-            last = last.next;
-        }
-
-        last.next = node;
-
-        return head;
+        return result.next;
     }
 }
