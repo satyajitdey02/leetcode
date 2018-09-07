@@ -5,13 +5,13 @@ public class LongestSubstringWithoutRepeating {
     public int lengthOfLongestSubstring(String s) {
         String cloneS = s.substring(0, s.length());
         int result = 0, index = 0;
-        char[] chars = cloneS.toCharArray();
+        //char[] chars = cloneS.toCharArray();
         StringBuilder sb = new StringBuilder();
 
         while (index < cloneS.length()) {
-            int repeatIndex = sb.toString().indexOf(chars[index]);
+            int repeatIndex = sb.toString().indexOf(cloneS.charAt(index));
             if (repeatIndex < 0) {
-                sb.append(chars[index]);
+                sb.append(cloneS.charAt(index));
                 index++;
                 continue;
             }
@@ -20,7 +20,7 @@ public class LongestSubstringWithoutRepeating {
                 result = sb.toString().length();
             }
 
-            String sub = sb.toString() + chars[index];
+            String sub = sb.toString() + cloneS.charAt(index);
 
 
             index = cloneS.indexOf(sub) + repeatIndex + 1;
@@ -28,7 +28,7 @@ public class LongestSubstringWithoutRepeating {
             if(cloneS.length() <= result) {
                 return result;
             }
-            chars = cloneS.toCharArray();
+           // chars = cloneS.toCharArray();
             index=0;
             sb.setLength(0);
 
