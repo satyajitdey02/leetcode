@@ -23,8 +23,11 @@ public class LongestSubstringWithoutRepeating {
             String sub = sb.toString() + chars[index];
 
 
-            index = cloneS.indexOf(sub) + repeatIndex + 1;//findNextNonRepeatChar(s, s.indexOf(sub) + repeatIndex + 1);
+            index = cloneS.indexOf(sub) + repeatIndex + 1;
             cloneS = cloneS.substring(index, cloneS.length());
+            if(cloneS.length() <= result) {
+                return result;
+            }
             chars = cloneS.toCharArray();
             index=0;
             sb.setLength(0);
@@ -32,31 +35,6 @@ public class LongestSubstringWithoutRepeating {
         }
 
         return result < sb.toString().length() ? sb.toString().length() : result;
-    }
-
-    private String removeConsecutiveChars(String str) {
-        char[] chars = str.toCharArray();
-        StringBuilder sb = new StringBuilder();
-        sb.append(chars[0]);
-        for (int i = 1; i < chars.length; i++) {
-            if (chars[i - 1] != chars[i]) {
-                sb.append(chars[i]);
-            }
-
-        }
-
-        return sb.toString();
-    }
-
-    private int findNextNonRepeatChar(String s, int start) {
-        char[] chars = s.toCharArray();
-        for (int i = start; i < s.length(); i++) {
-            if (i < s.length() - 1 && chars[i] != chars[i + 1]) {
-                return i;
-            }
-        }
-
-        return s.length();
     }
 
     public static void main(String[] args) {
