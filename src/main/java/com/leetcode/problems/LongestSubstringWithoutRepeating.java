@@ -26,21 +26,20 @@ public class LongestSubstringWithoutRepeating {
 
             index=0;
             sb.setLength(0);
-
         }
 
-        return result < sb.toString().length() ? sb.toString().length() : result;
+        return sb.toString().length();
     }
 
     public static void main(String[] args) {
         LongestSubstringWithoutRepeating instance = new LongestSubstringWithoutRepeating();
-        System.out.println("gpaazszqlcxvfoaaxzagwsemzszjukeczgfbzetkisiq: " + instance.lengthOfLongestSubstring("gpaazszqlcxvfoaaxzagwsemzszjukeczgfbzetkisiq"));
 
-        System.out.println("aab: "+ instance.lengthOfLongestSubstring("aab"));
-         System.out.println("satyajit: " + instance.lengthOfLongestSubstring("satyajit"));
-         System.out.println("keya: " +instance.lengthOfLongestSubstring("keya"));
+        System.out.println("gpaazszqlcxvfoaaxzagwsemzszjukeczgfbzetkisiq: " + instance.lengthOfLongestSubstring("gpaazszqlcxvfoaaxzagwsemzszjukeczgfbzetkisiq"));
+        System.out.println("aab: " + instance.lengthOfLongestSubstring("aab"));
+        System.out.println("satyajit: " + instance.lengthOfLongestSubstring("satyajit"));
+        System.out.println("keya: " + instance.lengthOfLongestSubstring("keya"));
         System.out.println("kuhu: " + instance.lengthOfLongestSubstring("kuhu"));
-        System.out.println("abcabcbb: "+instance.lengthOfLongestSubstring("abcabcbb"));
+        System.out.println("abcabcbb: " + instance.lengthOfLongestSubstring("abcabcbb"));
         System.out.println("bbbbbb: " + instance.lengthOfLongestSubstring("bbbbbb"));
         System.out.println("mpesjbcxgdfucjbrazpzpzdrlnepyiikzoeirghxkmsoytgyuxxjycdmqhbqrjasyhapnkpzyjowewuztt: " + instance.lengthOfLongestSubstring("mpesjbcxgdfucjbrazpzpzdrlnepyiikzoeirghxkmsoytgyuxxjycdmqhbqrjasyhapnkpzyjowewuztt"));
 
