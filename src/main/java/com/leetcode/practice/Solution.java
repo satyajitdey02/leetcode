@@ -1,4 +1,4 @@
-package com.leetcode.problems;
+package com.leetcode.practice;
 
 import java.io.*;
 import java.math.*;
