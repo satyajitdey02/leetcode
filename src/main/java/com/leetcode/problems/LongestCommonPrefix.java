@@ -10,28 +10,14 @@ public class LongestCommonPrefix {
       return "";
     }
 
-    if (strs.length == 1) {
-      return strs[0];
-    }
-
     String prefix = strs[0];
-    while (prefix.length() != 0) {
-      boolean found = true;
-      for (int i = 1; i < strs.length; i++) {
-        if (strs[i].indexOf(prefix) != 0) {
-          found = false;
-          break;
-        }
+    for (int i = 1; i < strs.length; i++) {
+      while (strs[i].indexOf(prefix) != 0) {
+        prefix = prefix.substring(0, prefix.length() - 1);
       }
-
-      if (found) {
-        return prefix;
-      }
-
-      prefix = prefix.substring(0, prefix.length() - 1);
     }
 
-    return "";
+    return prefix;
   }
 
   public static void main(String[] args) {
