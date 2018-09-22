@@ -10,6 +10,10 @@ public class LongestCommonPrefix {
       return "";
     }
 
+    if (strs.length == 1) {
+      return strs[0];
+    }
+
     String prefix = strs[0];
     while (prefix.length() != 0) {
       boolean found = true;
