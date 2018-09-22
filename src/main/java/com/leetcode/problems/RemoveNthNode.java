@@ -4,11 +4,11 @@ public class RemoveNthNode {
 
   public ListNode removeNthFromEnd(ListNode head, int n) {
 
-    int listSize = getListSize(head);
     if (n < 1) {
       return head;
     }
 
+    int listSize = getListSize(head);
     if (listSize == n) {
       return head.next;
     }
