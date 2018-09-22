@@ -9,12 +9,6 @@ public class ValidParentheses {
       return true;
     }
 
-    if (s.indexOf('(') < 0 && s.indexOf(')') < 0
-        && s.indexOf('{') < 0 && s.indexOf('}') < 0
-        && s.indexOf('[') < 0 && s.indexOf(']') < 0) {
-      return false;
-    }
-
     if (s.length() % 2 != 0) {
       return false;
     }
@@ -26,17 +20,13 @@ public class ValidParentheses {
         continue;
       }
 
-      if (c == ')' && !parenthesis.empty() && parenthesis.peek() == '(') {
-        parenthesis.pop();
+      if (parenthesis.empty()) {
         continue;
       }
 
-      if (c == '}' && !parenthesis.empty() && parenthesis.peek() == '{') {
-        parenthesis.pop();
-        continue;
-      }
-
-      if (c == ']' && !parenthesis.empty() && parenthesis.peek() == '[') {
+      if ((c == ')' && parenthesis.peek() == '(')
+          || (c == '}' && parenthesis.peek() == '{')
+          || (c == ']' && parenthesis.peek() == '[')) {
         parenthesis.pop();
         continue;
       }
