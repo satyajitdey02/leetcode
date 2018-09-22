@@ -5,6 +5,10 @@ public class RemoveNthNode {
   public ListNode removeNthFromEnd(ListNode head, int n) {
 
     int listSize = getListSize(head);
+    if (n < 1) {
+      return head;
+    }
+
     if (listSize == n) {
       return head.next;
     }
