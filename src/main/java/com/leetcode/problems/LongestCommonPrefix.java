@@ -14,26 +14,30 @@ public class LongestCommonPrefix {
       return strs[0];
     }
 
-    Arrays.sort(strs, (s1, s2) -> s1.length() - s2.length());
-
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < strs[0].length(); i++) {
-      char str0Char = strs[0].charAt(i);
-      for (int j = 1; j < strs.length; j++) {
-        if (strs[j].charAt(i) != str0Char) {
-          return sb.toString();
+    String firstStr = strs[0];
+    while (firstStr.length() != 0) {
+      boolean found = true;
+      for (int i = 1; i < strs.length; i++) {
+        if (strs[i].indexOf(firstStr) != 0) {
+          found = false;
+          break;
         }
       }
-      sb.append(str0Char);
+
+      if (found) {
+        return firstStr;
+      }
+
+      firstStr = firstStr.substring(0, firstStr.length() - 1);
     }
 
-    return sb.toString();
+    return "";
   }
 
   public static void main(String[] args) {
     LongestCommonPrefix prefix = new LongestCommonPrefix();
     //System.out.println(prefix.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
-    System.out.println(prefix.longestCommonPrefix(new String[]{"c", "c", ""}));
+    System.out.println(prefix.longestCommonPrefix(new String[]{"c", "acc", "ccc"}));
   }
 
 }
