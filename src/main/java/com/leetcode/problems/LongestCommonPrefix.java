@@ -10,10 +10,6 @@ public class LongestCommonPrefix {
       return "";
     }
 
-    if (strs.length == 1) {
-      return strs[0];
-    }
-
     String firstStr = strs[0];
     while (firstStr.length() != 0) {
       boolean found = true;
@@ -36,7 +32,7 @@ public class LongestCommonPrefix {
 
   public static void main(String[] args) {
     LongestCommonPrefix prefix = new LongestCommonPrefix();
-    //System.out.println(prefix.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
+    System.out.println(prefix.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
     System.out.println(prefix.longestCommonPrefix(new String[]{"c", "acc", "ccc"}));
   }
 
