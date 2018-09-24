@@ -4,22 +4,25 @@ package com.leetcode.problems;
 public class MergeSortedList {
 
   public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+    if (l1 == null && l2 == null) {
+      return null;
+    }
+
+    if (l1 != null && l2 == null) {
+      return l1;
+    }
+
+    if (l1 == null && l2 != null) {
+      return l2;
+    }
+
     ListNode dummy = new ListNode(0);
     ListNode l1Head = l1;
     ListNode l2Head = l2;
     ListNode mHead = dummy;
 
-    while (l1Head != null || l2Head != null) {
-      if (l1Head == null) {
-        mHead.next = l2Head;
-        break;
-      }
-
-      if (l2Head == null) {
-        mHead.next = l1Head;
-        break;
-      }
-
+    while (l1Head != null && l2Head != null) {
       if (l1Head.val > l2Head.val) {
         mHead.next = new ListNode(l2Head.val);
         l2Head = l2Head.next;
@@ -29,6 +32,14 @@ public class MergeSortedList {
       }
 
       mHead = mHead.next;
+    }
+
+    if (l1Head != null) {
+      mHead.next = l1Head;
+    }
+
+    if (l2Head != null) {
+      mHead.next = l2Head;
     }
 
     return dummy.next;
