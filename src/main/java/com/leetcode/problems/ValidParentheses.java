@@ -13,6 +13,10 @@ public class ValidParentheses {
       return false;
     }
 
+    if (s.startsWith(")") || s.startsWith("}") || s.startsWith("]")) {
+      return false;
+    }
+
     Stack<Character> parenthesis = new Stack<>();
     for (Character c : s.toCharArray()) {
       if (c == '(' || c == '{' || c == '[') {
