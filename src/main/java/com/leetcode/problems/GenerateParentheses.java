@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class GenerateParentheses {
@@ -21,13 +22,16 @@ public class GenerateParentheses {
 
     for (String s : generatedParenthesis) {
       int strVal = getStrVal(s);
-      if (strVal == 0) {
+      if (strVal == 0 && s.startsWith("(") && s.endsWith(")")) {
         listP.add(s);
         listN.add(s);
+        continue;
       } else if (strVal > 0 && s.startsWith("(")) {
         listP.add(s);
-      } else {
+        continue;
+      } else if (strVal < 0 && s.endsWith(")")) {
         listN.add(s);
+        continue;
       }
     }
 
@@ -40,7 +44,12 @@ public class GenerateParentheses {
         if (!sn.endsWith(")")) {
           continue;
         }
-        mergedString.add(sp + sn);
+
+        String ms = sp + sn;
+        if (isValid(ms)) {
+          mergedString.add(ms);
+        }
+
       }
     }
 
@@ -52,6 +61,39 @@ public class GenerateParentheses {
     }
 
     return result;
+  }
+
+  private boolean isValid(String s) {
+    if (s.isEmpty()) {
+      return true;
+    }
+
+    if (s.length() % 2 != 0) {
+      return false;
+    }
+
+    if (s.startsWith(")")) {
+      return false;
+    }
+
+    Stack<Character> parenthesis = new Stack<>();
+    for (Character c : s.toCharArray()) {
+      if (c == '(') {
+        parenthesis.push(c);
+        continue;
+      }
+
+      if (parenthesis.empty()) {
+        continue;
+      }
+
+      if ((c == ')' && parenthesis.peek() == '(')) {
+        parenthesis.pop();
+        continue;
+      }
+    }
+
+    return parenthesis.empty();
   }
 
   private int getStrVal(String s) {
@@ -83,10 +125,8 @@ public class GenerateParentheses {
   }
 
   public static void main(String[] args) {
-//["(((())))","((()()))","((())())","((()))()","(()(()))","(()()())","(()())()","(())(())","(())()()","()((()))","()(()())","()(())()","()()(())","()()()()"]
     GenerateParentheses generateParentheses = new GenerateParentheses();
-    List<String> parenthesis = generateParentheses.generateParenthesis(3);//new ArrayList<>();
-    // generateParentheses.generateKLengthStr("", 3, parenthesis);
+    List<String> parenthesis = generateParentheses.generateParenthesis(4);
     parenthesis.forEach(System.out::println);
   }
 }
