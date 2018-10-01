@@ -14,52 +14,20 @@ public class GenerateParentheses {
   public List<String> generateParenthesis(int n) {
     List<String> result = new ArrayList<>();
 
-    List<String> listP = new ArrayList<>();
-    List<String> listN = new ArrayList<>();
-
     List<String> generatedParenthesis = new ArrayList<>();
     generateKLengthStr("", n, generatedParenthesis);
 
-    for (String s : generatedParenthesis) {
-      int strVal = getStrVal(s);
-      if (strVal == 0 && s.startsWith("(") && s.endsWith(")")) {
-        listP.add(s);
-        listN.add(s);
-        continue;
-      } else if (strVal > 0 && s.startsWith("(")) {
-        listP.add(s);
-        continue;
-      } else if (strVal < 0 && s.endsWith(")")) {
-        listN.add(s);
-        continue;
-      }
-    }
-
     Set<String> mergedString = new HashSet<>();
-    for (String sp : listP) {
-      if (!sp.startsWith("(")) {
-        continue;
-      }
-      for (String sn : listN) {
-        if (!sn.endsWith(")")) {
-          continue;
-        }
-
-        String ms = sp + sn;
+    for (String is : generatedParenthesis) {
+      for (String js : generatedParenthesis) {
+        String ms = is + js;
         if (isValid(ms)) {
           mergedString.add(ms);
         }
-
       }
     }
 
-    for (String s : mergedString) {
-      int strVal = getStrVal(s);
-      if (strVal == 0) {
-        result.add(s);
-      }
-    }
-
+    result.addAll(mergedString);
     return result;
   }
 
@@ -83,8 +51,8 @@ public class GenerateParentheses {
         continue;
       }
 
-      if (parenthesis.empty()) {
-        continue;
+      if (parenthesis.empty() && c == ')') {
+        return false;
       }
 
       if ((c == ')' && parenthesis.peek() == '(')) {
@@ -94,22 +62,6 @@ public class GenerateParentheses {
     }
 
     return parenthesis.empty();
-  }
-
-  private int getStrVal(String s) {
-    Map<Character, Integer> map = new HashMap<Character, Integer>() {
-      {
-        put('(', 1);
-        put(')', -1);
-      }
-    };
-
-    int strVal = 0;
-    for (int i = 0; i < s.length(); i++) {
-      strVal += map.get(s.charAt(i));
-    }
-
-    return strVal;
   }
 
   private void generateKLengthStr(String prefix, int k, List<String> parenthesis) {
@@ -126,6 +78,7 @@ public class GenerateParentheses {
 
   public static void main(String[] args) {
     GenerateParentheses generateParentheses = new GenerateParentheses();
+    //System.out.println(generateParentheses.isValid("(())))()"));
     List<String> parenthesis = generateParentheses.generateParenthesis(4);
     parenthesis.forEach(System.out::println);
   }
