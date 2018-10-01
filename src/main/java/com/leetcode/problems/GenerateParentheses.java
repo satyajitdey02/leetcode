@@ -12,74 +12,29 @@ import java.util.stream.Collectors;
 public class GenerateParentheses {
 
   public List<String> generateParenthesis(int n) {
-    List<String> result = new ArrayList<>();
-
-    List<String> generatedParenthesis = new ArrayList<>();
-    generateKLengthStr("", n, generatedParenthesis);
-
-    Set<String> mergedString = new HashSet<>();
-    for (String is : generatedParenthesis) {
-      for (String js : generatedParenthesis) {
-        String ms = is + js;
-        if (isValid(ms)) {
-          mergedString.add(ms);
-        }
-      }
-    }
-
-    result.addAll(mergedString);
-    return result;
+    List<String> ans = new ArrayList();
+    backtrack(ans, "", 0, 0, n);
+    return ans;
   }
 
-  private boolean isValid(String s) {
-    if (s.isEmpty()) {
-      return true;
-    }
-
-    if (s.length() % 2 != 0) {
-      return false;
-    }
-
-    if (s.startsWith(")")) {
-      return false;
-    }
-
-    Stack<Character> parenthesis = new Stack<>();
-    for (Character c : s.toCharArray()) {
-      if (c == '(') {
-        parenthesis.push(c);
-        continue;
-      }
-
-      if (parenthesis.empty() && c == ')') {
-        return false;
-      }
-
-      if ((c == ')' && parenthesis.peek() == '(')) {
-        parenthesis.pop();
-        continue;
-      }
-    }
-
-    return parenthesis.empty();
-  }
-
-  private void generateKLengthStr(String prefix, int k, List<String> parenthesis) {
-    final char[] chars = {'(', ')'};
-    if (k == 0) {
-      parenthesis.add(prefix);
+  public void backtrack(List<String> ans, String cur, int open, int close, int max) {
+    if (cur.length() == max * 2) {
+      ans.add(cur);
       return;
     }
 
-    for (int i = 0; i < chars.length; i++) {
-      generateKLengthStr(prefix + chars[i], k - 1, parenthesis);
+    if (open < max) {
+      backtrack(ans, cur + "(", open + 1, close, max);
+    }
+    if (close < open) {
+      backtrack(ans, cur + ")", open, close + 1, max);
     }
   }
 
   public static void main(String[] args) {
     GenerateParentheses generateParentheses = new GenerateParentheses();
     //System.out.println(generateParentheses.isValid("(())))()"));
-    List<String> parenthesis = generateParentheses.generateParenthesis(4);
+    List<String> parenthesis = generateParentheses.generateParenthesis(2);
     parenthesis.forEach(System.out::println);
   }
 }
