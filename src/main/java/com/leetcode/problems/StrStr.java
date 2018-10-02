@@ -28,7 +28,18 @@ public class StrStr {
           return index;
         }
 
-        index = -1;
+        for (int j = 1; j < needle.length(); j++) {
+          if (haystack.charAt(index + j) == needle.charAt(j)) {
+            continue;
+          } else {
+            index = -1;
+            break;
+          }
+        }
+
+        if (index >= 0) {
+          return index;
+        }
       }
       i++;
     }
@@ -38,7 +49,6 @@ public class StrStr {
 
   public static void main(String[] args) {
     StrStr instance = new StrStr();
-    System.out.println(instance.strStr("mississippi",
-        "sippia"));
+    System.out.println(instance.strStr("satyajit", "jit"));
   }
 }
