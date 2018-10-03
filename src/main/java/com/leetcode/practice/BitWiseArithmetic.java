@@ -27,6 +27,10 @@ public class BitWiseArithmetic {
     return add(~x, 1);
   }
 
+  public boolean isOdd(int x) {
+    return (x & 1) != 0;
+  }
+
   public int sub(int x, int y) {
     return add(x, negate(y));
   }
