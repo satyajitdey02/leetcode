@@ -6,15 +6,21 @@ package com.leetcode.practice;
 public class BitWiseArithmetic {
 
   public int add(int x, int y) {
-    int a, b;
-    do {
-      a = x & y;
-      b = x ^ y;
-      x = a << 1;
-      y = b;
-    } while (a != 0);
+    // Iterate till there is no carry
+    while (y != 0) {
+      // carry now contains common
+      //set bits of x and y
+      int carry = x & y;
 
-    return b;
+      // Sum of bits of x and y where at
+      //least one of the bits is not set
+      x = x ^ y;
+
+      // Carry is shifted by one so that adding
+      // it to x gives the required sum
+      y = carry << 1;
+    }
+    return x;
   }
 
   public int negate(int x) {
@@ -70,6 +76,6 @@ public class BitWiseArithmetic {
 
   public static void main(String[] args) {
     BitWiseArithmetic instance = new BitWiseArithmetic();
-    System.out.println(instance.mul(6, 7));
+    System.out.println(instance.add(6, 7));
   }
 }
