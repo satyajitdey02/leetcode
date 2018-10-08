@@ -2,75 +2,41 @@ package com.leetcode.problems;
 
 public class SearchInRotatedSortedArray {
 
-  class Node {
-
-    Key key;
-    Node left;
-    Node right;
-
-    Node(Key key) {
-      this.key = key;
-      left = right = null;
-    }
-  }
-
-  class Key {
-
-    int val;
-    int index;
-
-    Key(int val, int index) {
-      this.val = val;
-      this.index = index;
-    }
-  }
-
-  private Node convertToBST(int nums[]) {
-    Node root = null;
-    for (int i = 0; i < nums.length; i++) {
-      root = insertToBST(root, new Key(nums[i], i));
-    }
-
-    return root;
-  }
-
-  private Node insertToBST(Node root, Key key) {
-    if (root == null) {
-      return new Node(key);
-    }
-
-    if (root.key.val < key.val) {
-      root.right = insertToBST(root.right, key);
-    } else {
-      root.left = insertToBST(root.left, key);
-    }
-
-    return root;
-  }
-
-  private int search(Node root, int value) {
-    if (root == null) {
+  public int search(int[] nums, int target) {
+    if (nums.length == 0) {
       return -1;
     }
 
-    if (value == root.key.val) {
-      return root.key.index;
-    } else if (value > root.key.val) {
-      return search(root.right, value);
-    } else {
-      return search(root.left, value);
+    int start = 0;
+    int end = nums.length - 1;
+
+    while (start <= end) {
+      int mid = (start + end) / 2;
+      if (target == nums[mid]) {
+        return mid;
+      }
+
+      if (nums[start] <= nums[mid]) {
+        if (target >= nums[start] && target < nums[mid]) {
+          end = mid - 1;
+        } else {
+          start = mid + 1;
+        }
+      } else {
+        if (target > nums[mid] && target <= nums[end]) {
+          start = mid + 1;
+        } else {
+          end = mid - 1;
+        }
+      }
     }
 
-  }
-
-  public int search(int[] nums, int target) {
-    Node root = convertToBST(nums);
-    return search(root, target);
+    return -1;
   }
 
   public static void main(String[] args) {
-    int nums[] = {4, 5, 6, 7, 0, 1, 2};
-    System.out.println(new SearchInRotatedSortedArray().search(nums, 5));
+    int nums[] = {3,1};
+    System.out.println(new SearchInRotatedSortedArray().search(nums, 1));
   }
 
 }
