@@ -14,17 +14,17 @@ public class CountAndSay {
       genStr = countAndSay(1 + s, round + 1, n);
     } else {
       int count = 1;
-      String say = "";
+      StringBuilder say = new StringBuilder();
       for (int i = 0; i < s.length(); i++) {
         if (i < s.length() - 1 && s.charAt(i) == s.charAt(i + 1)) {
           count++;
         } else {
-          say = say + count + s.charAt(i);
+          say.append(count).append(s.charAt(i));
           count = 1;
         }
       }
 
-      genStr = countAndSay(say, round + 1, n);
+      genStr = countAndSay(say.toString(), round + 1, n);
     }
 
     return genStr;
