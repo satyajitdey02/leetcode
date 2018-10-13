@@ -52,95 +52,38 @@ public class ValidSudoku {
         {'.', '.', '.', '.', '.', '.', '.', '.', '.'}
     };
     System.out.println("Input-3:" + instance.isValidSudoku(inputs3));
+   /* System.out.println(instance.findSubBox(4, 3));
+    System.out.println(instance.findSubBox(7, 8));
+    System.out.println(instance.findSubBox(3, 5));*/
   }
 
   public boolean isValidSudoku(char[][] board) {
-    Set<Character> rows = new HashSet<>();
-    Set<Character> column = new HashSet<>();
     Set<String> box = new HashSet<>();
 
     for (int i = 0; i < 9; i++) {
-      rows = new HashSet<>();
-      column = new HashSet<>();
+      Set<Character> rows = new HashSet<>();
+      Set<Character> columns = new HashSet<>();
 
       for (int j = 0; j < 9; j++) {
-
-        char rc = board[i][j];
-        if (rc != '.' && !rows.add(rc)) {
+        if (board[i][j] != '.' && !rows.add(board[i][j])) {
           return false;
         }
 
-        char cr = board[j][i];
-        if (cr != '.' && !column.add(cr)) {
+        if (board[j][i] != '.' && !columns.add(board[j][i])) {
           return false;
         }
 
-        int subBox = findSubBox(i, j);
-        StringBuilder sb = new StringBuilder();
-        sb.append(subBox).append(rc);
-        if (rc != '.' && !box.add(sb.toString())) {
-          return false;
+        if (board[i][j] != '.') {
+          int subBoxNo = (i / 3) * 3 + (j / 3);
+          StringBuilder sb = new StringBuilder();
+          sb.append(subBoxNo).append(board[i][j]);
+          if (!box.add(sb.toString())) {
+            return false;
+          }
         }
       }
     }
 
     return true;
   }
-
-  private List<String> getKeysforValue(Character value, Map<String, Character> map) {
-    if (!map.containsValue(value)) {
-      return null;
-    }
-
-    List<String> keys = new ArrayList<>();
-    for (Map.Entry<String, Character> entry : map.entrySet()) {
-      if (entry.getValue() == value) {
-        keys.add(entry.getKey());
-      }
-    }
-    return keys;
-  }
-
-  private int findSubBox(int i, int j) {
-
-    if (i >= 0 && i < 3 && j >= 0 && j < 3) {
-      return 0;
-    }
-
-    if (i >= 3 && i < 6 && j >= 0 && j < 3) {
-      return 1;
-    }
-
-    if (i >= 6 && i < 9 && j >= 0 && j < 3) {
-      return 2;
-    }
-
-    if (i >= 0 && i < 3 && j >= 3 && j < 6) {
-      return 3;
-    }
-
-    if (i >= 3 && i < 6 && j >= 3 && j < 6) {
-      return 4;
-    }
-
-    if (i >= 6 && i < 9 && j >= 3 && j < 6) {
-      return 5;
-    }
-
-    if (i >= 0 && i < 3 && j >= 6 && j < 9) {
-      return 6;
-    }
-
-    if (i >= 3 && i < 6 && j >= 6 && j < 9) {
-      return 7;
-    }
-
-    if (i >= 6 && i < 9 && j >= 6 && j < 9) {
-      return 8;
-    }
-
-    return -1;
-  }
-
-
 }
