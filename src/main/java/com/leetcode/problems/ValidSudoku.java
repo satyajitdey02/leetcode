@@ -1,38 +1,86 @@
 package com.leetcode.problems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ValidSudoku {
 
+  public static void main(String[] args) {
+    ValidSudoku instance = new ValidSudoku();
+
+    char[][] inputs1 = {
+        {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+    };
+    System.out.println("Input-1:" + instance.isValidSudoku(inputs1));
+
+    char[][] inputs2 = {
+        {'8', '3', '.', '.', '7', '.', '.', '.', '.'},
+        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+    };
+    System.out.println("Input-2:" + instance.isValidSudoku(inputs2));
+
+    char[][] inputs3 = {
+        {'.', '.', '4', '.', '.', '.', '6', '3', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+        {'5', '.', '.', '.', '.', '.', '.', '9', '.'},
+        {'.', '.', '.', '5', '6', '.', '.', '.', '.'},
+        {'4', '.', '3', '.', '.', '.', '.', '.', '1'},
+        {'.', '.', '.', '7', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '5', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.', '.'}
+    };
+    System.out.println("Input-3:" + instance.isValidSudoku(inputs3));
+  }
+
   public boolean isValidSudoku(char[][] board) {
-    Map<String, Character> sudokuMap = new HashMap<>();
+    Set<Character> rows = new HashSet<>();
+    Set<Character> column = new HashSet<>();
+    Set<String> box = new HashSet<>();
+
     for (int i = 0; i < 9; i++) {
+      rows = new HashSet<>();
+      column = new HashSet<>();
+
       for (int j = 0; j < 9; j++) {
-        if (board[i][j] == '.') {
-          continue;
+
+        char rc = board[i][j];
+        if (rc != '.' && !rows.add(rc)) {
+          return false;
+        }
+
+        char cr = board[j][i];
+        if (cr != '.' && !column.add(cr)) {
+          return false;
         }
 
         int subBox = findSubBox(i, j);
         StringBuilder sb = new StringBuilder();
-        sb.append(i).append(j).append(subBox);
-        List<String> coords = getKeysforValue(board[i][j], sudokuMap);
-        if (coords == null) {
-          sudokuMap.put(sb.toString(), board[i][j]);
-          continue;
+        sb.append(subBox).append(rc);
+        if (rc != '.' && !box.add(sb.toString())) {
+          return false;
         }
-
-        for (String coord : coords) {
-          if ((i == coord.charAt(0) - 48) || (j == coord.charAt(1) - 48)
-              || (subBox == coord.charAt(2) - 48)) {
-            return false;
-          }
-        }
-
-        sudokuMap.put(sb.toString(), board[i][j]);
-
       }
     }
 
@@ -94,35 +142,5 @@ public class ValidSudoku {
     return -1;
   }
 
-
-  public static void main(String[] args) {
-    ValidSudoku instance = new ValidSudoku();
-
-    char[][] inputs1 = {
-        {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
-    };
-    System.out.println("Input-1:" + instance.isValidSudoku(inputs1));
-
-    char[][] inputs2 = {
-        {'8', '3', '.', '.', '7', '.', '.', '.', '.'},
-        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
-    };
-    System.out.println("Input-2:" + instance.isValidSudoku(inputs2));
-  }
 
 }
