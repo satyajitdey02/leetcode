@@ -65,21 +65,21 @@ public class ValidSudoku {
       Set<Character> columns = new HashSet<>();
 
       for (int j = 0; j < 9; j++) {
-        if (board[i][j] != '.' && !rows.add(board[i][j])) {
-          return false;
-        }
-
-        if (board[j][i] != '.' && !columns.add(board[j][i])) {
-          return false;
-        }
-
         if (board[i][j] != '.') {
+          if (!rows.add(board[i][j])) {
+            return false;
+          }
+
           int subBoxNo = (i / 3) * 3 + (j / 3);
           StringBuilder sb = new StringBuilder();
           sb.append(subBoxNo).append(board[i][j]);
           if (!box.add(sb.toString())) {
             return false;
           }
+        }
+
+        if (board[j][i] != '.' && !columns.add(board[j][i])) {
+          return false;
         }
       }
     }
