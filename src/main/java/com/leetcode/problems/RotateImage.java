@@ -3,33 +3,18 @@ package com.leetcode.problems;
 public class RotateImage {
 
   public void rotate(int[][] matrix) {
-    int n = matrix.length;
-    for (int i = 0; i < n / 2; i++) {
-
-      for (int k = 0; k < (n - 1 - 2 * i); k++) {
-        int nMovements = 4 * (n - 1 - 2 * i);
-        int nextI = i;
-        int nextJ = i;
-        int toMove = matrix[nextI][nextJ];
-        for (int j = 0; j < nMovements; j++) {
-
-          if (((nextJ + 1) > (n - 1 - i)) && (nextI < (n - 1 - i))) {
-            nextI++;
-          } else if (((nextI + 1) > (n - 1 - i)) && (nextJ > i)) {
-            nextJ--;
-          } else if (((nextJ - 1) < i) && (nextI > i)) {
-            nextI--;
-          } else {
-            nextJ++;
-          }
-
-          int temp = matrix[nextI][nextJ];
-          matrix[nextI][nextJ] = toMove;
-          toMove = temp;
-        }
+    int N = matrix.length;
+    for (int offset = 0; offset <= N / 2; ++offset) {
+      for (int i = offset; i < N - offset - 1; ++i) {
+        int t = matrix[offset][i];
+        matrix[offset][i] = matrix[N - 1 - i][offset];
+        matrix[N - 1 - i][offset] = matrix[N - 1 - offset][N - 1 - i];
+        matrix[N - 1 - offset][N - 1 - i] = matrix[i][N - 1 - offset];
+        matrix[i][N - 1 - offset] = t;
       }
     }
   }
+
 
   private void printMatrix(int[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
