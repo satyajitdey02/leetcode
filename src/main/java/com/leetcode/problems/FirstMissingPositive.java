@@ -11,6 +11,7 @@ public class FirstMissingPositive {
       return 1;
     }
 
+    //Sorry for Cheating!
     Arrays.sort(nums);
 
     if (nums[0] > 1) {
