@@ -4,30 +4,28 @@ public class RotateImage {
 
   public void rotate(int[][] matrix) {
     int n = matrix.length;
-    int previous = matrix[1][0], temp;
-    for (int i = 0; i < n; i++) {
-      int nMovements = 4 * (n - 1 - i);
-      for (int j = i; j < nMovements; j++) {
-        int nextI = i;
-        int nextJ = j + 1;
+    for (int i = 0; i < n / 2; i++) {
 
-        if (i == n - 1 && j == n - 1) {
-          nextJ = j - 1;
-        } else if (i == n - 1 && j == 0) {
-          nextI = i - 1;
-        } else if (i == 0 && j == 0) {
-          nextJ = 1;
-        } else if (i == 0 && j == n - 1) {
-          nextI = 1;
+      int nMovements = 4 * (n - 1 - i);
+      int nextI = i;
+      int nextJ = i;
+      int toMove = matrix[nextI][nextJ];
+      for (int j = 0; j < nMovements; j++) {
+
+        if (nextJ + 1 > (n - 1) && nextI < (n - 1)) {
+          nextI++;
+        } else if (nextI + 1 > (n - 1) && nextJ > 0) {
+          nextJ--;
+        } else if (nextJ - 1 < 0 && nextI > 0) {
+          nextI--;
+        } else {
+          nextJ++;
         }
 
-        int J = j % n;
-        temp = matrix[i][J];
-        matrix[i][J] = previous;
-        previous = temp;
+        int temp = matrix[nextI][nextJ];
+        matrix[nextI][nextJ] = toMove;
+        toMove = temp;
       }
-
-      printMatrix(matrix);
     }
   }
 
@@ -44,16 +42,16 @@ public class RotateImage {
 
   public static void main(String[] args) {
     RotateImage instance = new RotateImage();
-    int[][] matrix = {
+  /*  int[][] matrix = {
         {1, 2},
         {3, 4}
-    };
-    /*int[][] matrix = {
+    };*/
+    int[][] matrix = {
         {1, 2, 3},
         {4, 5, 6},
         {7, 8, 9}
-    };*/
-    instance.printMatrix(matrix);
+    };
+    //instance.printMatrix(matrix);
     instance.rotate(matrix);
     instance.printMatrix(matrix);
   }
