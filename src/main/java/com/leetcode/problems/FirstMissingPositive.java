@@ -7,33 +7,18 @@ import java.util.List;
 public class FirstMissingPositive {
 
   public int firstMissingPositive(int[] nums) {
-    if (nums.length < 1) {
-      return 1;
-    }
-
-    //Sorry for Cheating!
-    Arrays.sort(nums);
-
-    if (nums[0] > 1) {
-      return 1;
-    }
-
-    for (int i = 1; i < nums.length; i++) {
-      if (nums[i] < 0 || (nums[i - 1] < 0 && nums[i] <= 1)) {
-        continue;
-      }
-
-      if (nums[i - 1] < 0 && nums[i] > 1) {
-        return 1;
-      }
-
-      int diff = nums[i] - nums[i - 1];
-      if (diff > 1) {
-        return nums[i - 1] + 1;
+    int[] map = new int[nums.length + 1];
+    for (int i = 0; i < nums.length; i++) {
+      if (nums[i] > 0 && nums[i] <= nums.length) {
+        map[nums[i]] = 1;
       }
     }
-
-    return nums[nums.length - 1] + 1;
+    for (int i = 1; i < map.length; i++) {
+      if (map[i] == 0) {
+        return i;
+      }
+    }
+    return Math.max(nums.length + 1, 1);
   }
 
   public static void main(String[] args) {
