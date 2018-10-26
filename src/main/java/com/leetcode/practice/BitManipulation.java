@@ -7,7 +7,7 @@ public class BitManipulation {
 
   public static void main(String[] args) {
     BitManipulation instance = new BitManipulation();
-    int num = 5;//0b00000111;
+    int num = 8;//0b00000111;
     //int pos = 1;//0b00000010;
 
     System.out.println(String.format("%s:%8s", num, Integer.toBinaryString(num)).replace(' ', '0'));
@@ -27,6 +27,9 @@ public class BitManipulation {
 
     boolean isSet = instance.isSet(num, 0);
     System.out.println(String.format("IS_SET[%s]:%s", num, isSet));
+
+    System.out.println(instance.isOdd(num));
+    System.out.println(instance.isPowOf2(num));
   }
 
   public int set(int number, int position) {
@@ -44,6 +47,14 @@ public class BitManipulation {
   public boolean isSet(int number, int position) {
     //return (number & (1 << position)) != 0;//1st method
     return (number >> position & 1) != 0;//2nd method
+  }
+
+  public boolean isOdd(int number) {
+    return (number & 1) == 1;
+  }
+
+  public boolean isPowOf2(int number) {
+    return (number & number - 1) == 0;
   }
 
 }
