@@ -11,29 +11,22 @@ public class PowXN {
   }
 
   public double myPow(double x, int n) {
-    return n < 0 ? (1 / pow(x, Math.abs(Long.parseLong(String.valueOf(n))))) : pow(x, n);
+    double X = x;
+    long N = (n == Integer.MIN_VALUE) ? Long.parseLong(String.valueOf(n)) : n;
+    if (N < 0) {
+      N = Math.abs(N);
+      X = 1 / X;
+    }
+
+    return pow(X, N);
   }
 
   private double pow(double x, long n) {
-
     if (n == 0) {
       return 1;
     }
 
-    if (n == 1) {
-      return x;
-    }
-
-    if (n == 2) {
-      return x * x;
-    }
-
-    if ((n & 1) != 0) {
-      return x * pow(x, n - 1);
-    }
-
-    return pow(pow(x, n / 2), 2);
-
+    return (n & 1) == 0 ? pow(x * x, n / 2) : x * pow(x * x, n / 2);
   }
 
 }
