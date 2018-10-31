@@ -1,8 +1,5 @@
 package com.leetcode.problems;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by satyajit on 10/25/18.
  */
@@ -10,44 +7,33 @@ public class PowXN {
 
   public static void main(String[] args) {
     PowXN instance = new PowXN();
-    System.out.println(instance.myPow(2, -2));
+    System.out.println(instance.myPow(2, Integer.MIN_VALUE));
   }
-
-  Map<Integer, Double> map = new HashMap<>();
 
   public double myPow(double x, int n) {
+    return n < 0 ? (1 / pow(x, Math.abs(Long.parseLong(String.valueOf(n))))) : pow(x, n);
+  }
+
+  private double pow(double x, long n) {
+
     if (n == 0) {
-      return 1.0;
-    }
-    double result = divide(x, n < 0 ? -n : n);
-    return n < 0 ? 1 / result : result;
-  }
-
-  private double divide(double x, int n) {
-    if (n > 1) {
-      int m = n / 2;
-      divide(x, m);
-      divide(x, n - m);
-
-      return conqueer(x, m, n - m);
+      return 1;
     }
 
-    map.put(1, x);
-    return x;
-  }
-
-  private double conqueer(double x, int m, int n) {
-    Double mValue = map.get(m);//map.computeIfAbsent(m, k -> x);
-    if (n == 0) {
-      return mValue;
+    if (n == 1) {
+      return x;
     }
 
-    Double nValue = map.get(n);//map.computeIfAbsent(n, k -> x);
-    double value = mValue * nValue;
+    if (n == 2) {
+      return x * x;
+    }
 
-    map.put(m + n, value);
-    return value;
+    if ((n & 1) != 0) {
+      return x * pow(x, n - 1);
+    }
+
+    return pow(pow(x, n / 2), 2);
+
   }
-
 
 }
