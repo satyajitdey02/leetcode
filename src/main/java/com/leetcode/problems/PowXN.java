@@ -7,26 +7,31 @@ public class PowXN {
 
   public static void main(String[] args) {
     PowXN instance = new PowXN();
-    System.out.println(instance.myPow(2, Integer.MIN_VALUE));
+    System.out.println(instance.myPow(0, 1));
   }
 
   public double myPow(double x, int n) {
-    double X = x;
-    long N = (n == Integer.MIN_VALUE) ? Long.parseLong(String.valueOf(n)) : n;
-    if (N < 0) {
-      N = Math.abs(N);
-      X = 1 / X;
+    if (x == 0) {
+      return 0;
     }
 
-    return pow(X, N);
-  }
-
-  private double pow(double x, long n) {
     if (n == 0) {
       return 1;
     }
 
-    return (n & 1) == 0 ? pow(x * x, n / 2) : x * pow(x * x, n / 2);
+    double result = 1;
+    double X = x;
+    int N = n < 0 ? -n : n;
+    while (N != 0) {
+      if ((N & 1) == 1) {
+        result = result * X;
+      }
+
+      N >>>= 1;
+      X *= X;
+    }
+
+    return n >= 0 ? result : 1 / result;
   }
 
 }
