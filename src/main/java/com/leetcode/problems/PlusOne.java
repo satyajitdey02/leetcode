@@ -7,10 +7,15 @@ public class PlusOne {
 
   public static void main(String[] args) {
     PlusOne instance = new PlusOne();
-    System.out.println(instance.plusOne(new int[]{9}));
+    System.out.println(instance.plusOne(new int[]{8, 9, 9, 8}));
   }
 
   public int[] plusOne(int[] digits) {
+
+    if (digits[digits.length - 1] < 9) {
+      digits[digits.length - 1]++;
+      return digits;
+    }
 
     int carry = 1;
     for (int i = digits.length - 1; i >= 0; i--) {
